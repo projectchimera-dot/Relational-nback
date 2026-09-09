@@ -80,3 +80,17 @@ test('wiki explicitly explains side-count relation rules and left-right irreleva
   assert.match(wiki, /more-sided shape is below/i);
   assert.match(wiki, /left.*right.*does not|left.*right.*never/i);
 });
+
+test('2D grid fixes all three row tracks so stimulus content cannot resize a cell', async () => {
+  const css = await read('styles.css');
+  assert.match(css, /grid-template-rows:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/);
+  assert.match(css, /\.grid-cell\s*\{[^}]*min-height:\s*0[^}]*overflow:\s*hidden/s);
+});
+
+test('game stage and 2D grid share one exact playfield size with tight vertical gaps', async () => {
+  const css = await read('styles.css');
+  assert.match(css, /--playfield-size:\s*min\(/);
+  assert.match(css, /\.game-stage\s*\{[^}]*width:\s*var\(--playfield-size\)[^}]*height:\s*var\(--playfield-size\)[^}]*margin:\s*0 auto 4px/s);
+  assert.match(css, /\.grid-2d\s*\{[^}]*width:\s*100%[^}]*height:\s*100%/s);
+  assert.match(css, /\.game-hud\s*\{[^}]*margin:\s*0 auto 4px/s);
+});

@@ -211,3 +211,66 @@ code { color: var(--accent); }
   .game-hud { align-items: flex-start; flex-direction: column; gap: 3px; }
   .game-hud strong { font-size: 19px; }
 }
+
+/* Tight game geometry: HUD, grid and response deck are one compact stack. */
+#game-view.active {
+  --playfield-size: min(520px, calc(100vw - 32px));
+}
+
+.game-topline {
+  width: min(760px, 100%);
+  margin: 0 auto 4px;
+}
+
+.progress-track {
+  width: min(760px, 100%);
+  margin: 4px auto;
+}
+
+.game-hud {
+  width: var(--playfield-size);
+  margin: 0 auto 4px;
+  min-height: 40px;
+  padding: 6px 10px;
+}
+
+.game-stage {
+  width: var(--playfield-size);
+  height: var(--playfield-size);
+  aspect-ratio: auto;
+  margin: 0 auto 4px;
+}
+
+.grid-2d {
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cell {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.stimulus-svg {
+  display: block;
+  width: 82%;
+  height: 82%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.response-deck {
+  margin: 0 auto;
+}
+
+@media (max-height: 800px) and (min-width: 761px) {
+  #game-view.active { --playfield-size: 430px; }
+}
+
+@media (max-width: 760px) {
+  #game-view.active { --playfield-size: min(520px, calc(100vw - 20px)); }
+  .game-hud { min-height: 38px; }
+}
